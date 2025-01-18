@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yanis is VERY sigma</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Video -->
+  <video autoplay muted loop id="background-video">
+    <source src="background.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Rain particles -->
+  <div class="rain-container"></div>
+
+  <!-- Tilt Effect -->
+  <div class="tilt-box" data-tilt data-tilt-max="25" data-tilt-speed="400">
+    <img src="pfp.png" alt="Profile Picture" class="profile-img">
+    <div class="text primary">Yanis</div>
+    <div class="text secondary">Web Developer & Designer, Website(s) aren't done yet</div>
+
+    <!-- Image Links -->
+    <div class="image-links">
+      <a href="https://link1.com" target="_blank">
+        <img src="b1.png" alt="Button 1">
+      </a>
+      <a href="https://link2.com" target="_blank">
+        <img src="b2.png" alt="Button 2">
+      </a>
+      <a href="https://link3.com" target="_blank">
+        <img src="b3.png" alt="Button 3">
+      </a>
+    </div>
+  </div>
+
+  <!-- Movable Frame -->
+  <div class="frame" id="frame" style="left: -13%; top: 20%; width: 50%; height: 60%;">
+    <img src="frameimg.jpg" alt="Frame Image">
+  </div>
+
+  <!-- Clickable Frame -->
+  <div class="clickable-frame" id="clickable-frame" style="left: 85%; top: 70%; width: 20%; height: 30%;">
+    <img src="fframe1.png" alt="Clickable Frame Image" id="clickable-frame-img">
+  </div>
+
+  <!-- Include VanillaTilt -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Anti-Inspect Element Script -->
+  <script>
+    // Disable Right-Click
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      alert('Right-click is disabled on this website.');
+    });
+
+    // Disable Keybinds for DevTools
+    document.addEventListener('keydown', function (e) {
+      if (
+        e.key === 'F12' || // F12 Key
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        (e.ctrlKey && e.key === 'U') // Ctrl+U (View Source)
+      ) {
+        e.preventDefault();
+        alert('Inspect Element is disabled.');
+        
+        // Replace content with the video
+        replaceWithVideo();
+      }
+    });
+
+    // Function to replace the content with video and go fullscreen
+    function replaceWithVideo() {
+      // Replace the body content with the video
+      document.body.innerHTML = `
+        <video id="fullscreen-video" autoplay loop>
+          <source src="video (1).mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+
+      // Get the video element
+      const video = document.getElementById('fullscreen-video');
+
+      // Make the video fullscreen and prevent exiting fullscreen
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.mozRequestFullScreen) { // Firefox
+        video.mozRequestFullScreen();
+      } else if (video.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) { // IE/Edge
+        video.msRequestFullscreen();
+      }
+
+      // Prevent the user from exiting fullscreen
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' || event.key === 'F11') {
+          event.preventDefault(); // Prevent ESC and F11 from exiting fullscreen
+        }
+      });
+
+      // Prevent video from being paused (no controls)
+      video.controls = false;
+    }
+  </script>
+</body>
+</html>
